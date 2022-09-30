@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const bodySchema = Joi.object({
 
-    email:Joi.string().email().required(),
+    email:Joi.string().email().required().label("Envie o email"),
 
     password:Joi.string().required()
 

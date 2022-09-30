@@ -11,7 +11,7 @@ export function validateJWT() {
     const token = req.headers['authorization']?.split(" ")[1];
 
     if (!token) {
-      return res.status(401).send('Voce nao enviou o token');
+      return res.status(401).send('Token not sent');
     }
 
     const SECRET: string = process.env.TOKEN_SECRET_KEY ?? '';
@@ -22,7 +22,7 @@ export function validateJWT() {
       res.locals.user = data;
       next();
     } catch (error) {
-      return res.status(401).send('Seu token nao é válido');
+      return res.status(401).send('Your token is not valid');
     }
   };
 }
