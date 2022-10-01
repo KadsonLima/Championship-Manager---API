@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import authRouter from './authRouter';
-import champRouter from './champRouter';
+import championshipRouter from './championshipRouter';
 
 const router = Router()
 
 router.use(authRouter)
-router.use(champRouter)
+router.use(championshipRouter)
 
 export default router

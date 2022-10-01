@@ -24,8 +24,9 @@ model Championship{
   id         Int      @id @default(autoincrement())
   name       String   @unique
   link       String   @unique
-  createdAt  DateTime @default(now())
-  Teams Team[]
+  createdAt  DateTime @default(now()) @db.Date()
+  active     Boolean  @default(true)
+  subscribes ChampionshipAndTeam[]
 
   @@map("championship")
 }
@@ -41,17 +42,27 @@ model Groups{
 
 }
 
+model ChampionshipAndTeam{
+  id      Int    @id @default(autoincrement())
+  camp    Championship @relation(fields: [campId], references: [id])
+  campId  Int
+  team    Team @relation(fields: [teamId], references: [id])
+  teamId  Int
+
+  @@map("championshipAndTeam")
+}
+
+
 model Team{
   id      Int    @id @default(autoincrement())
   name    String
-  camp    Championship @relation(fields: [campId], references: [id])
-  campId  Int
   lider   String @unique
   membro1 String @unique
   membro2 String @unique
   membro3 String @unique
 
   group Groups[]
+  championship ChampionshipAndTeam[]
 
   @@map("team")
 }
