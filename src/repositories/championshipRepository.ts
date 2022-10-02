@@ -21,6 +21,7 @@ const getChampionships = async () =>{
     const result = await prisma.championship.findMany({
         select:{    
             name:true,
+            id:true,
             _count:true,
             subscribes:{
                 select:{
@@ -41,4 +42,32 @@ const getChampionships = async () =>{
 
 }
 
-export {create, getChampionships}
+const getChampionshipById = async (id:number) =>{
+    console.log("dsadas", id)
+
+    const result = await prisma.championship.findUnique({
+        where:{id:id},
+        select:{
+            name:true,
+            link:true,
+            subscribes:{
+                select:{
+                    team:{
+                        select:{
+                            name:true,
+                            lider:true,
+                            membro1:true,
+                            membro2:true,
+                            membro3:true,
+                        }
+                    }
+                }
+            }
+        }
+    })
+
+    return result
+
+}
+
+export {create, getChampionships, getChampionshipById}

@@ -19,4 +19,12 @@ const getChampionships = async () =>{
 
 }
 
-export {create, getChampionships}
+const getChampionshipById = async (id:number) =>{
+
+    const result = await championshipRepository.getChampionshipById(id)
+
+    return result 
+
+}
+
+export {create, getChampionships, getChampionshipById}

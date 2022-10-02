@@ -18,4 +18,13 @@ const getChampionships = async ( req:Request, res:Response ) =>{
     res.status(200).send(result)
 }
 
-export { create, getChampionships }
+const getChampionshipById = async ( req:Request, res:Response ) =>{
+
+    const id = Number(req.params.id)
+
+    const result = await championshipService.getChampionshipById(id)
+    
+    res.status(200).send(result)
+}
+
+export { create, getChampionships , getChampionshipById}
