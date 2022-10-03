@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && npx prisma generate && npx prisma migrate deploy",
-    "start": "--experimental-specifier-resolution=node --trace-warnings' node src/server.js",
+    "start": "node src/server.js",
     "dev": "dotenv -e .env.test nodemon src/server.ts",
     "prisma:reset": "prisma migrate reset --force",
     "prisma:migrate": "prisma migrate dev",
