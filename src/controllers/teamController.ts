@@ -1,21 +1,16 @@
 
 import { Request, Response } from "express"
-import * as championshipService from '../service/championshipService'
+import * as teamService from '../service/teamService'
 
 
 const registerTeam = async ( req:Request, res:Response ) =>{
-    const { name } = req.body
+    const {champ} = req.params;
+    const teamBody = req.body;
     
-    const result = await championshipService.create({name})
+    const result = await teamService.register(teamBody, champ)
 
     res.status(201).send(result)
 }
 
-const getChampionships = async ( req:Request, res:Response ) =>{
 
-    const result = await championshipService.getChampionships()
-    
-    res.status(200).send(result)
-}
-
-export { registerTeam, getChampionships }
+export { registerTeam }

@@ -1,30 +1,33 @@
 import {prisma} from "../database";
+import { TeamData } from "../interfaces/teamInterface";
 import { UserData, UserReturn } from "../interfaces/userInterface";
 import { conflictError, notFoundError } from "../utils/errorUtils";
 
-const create = async (body:UserData) =>{
+const createTeam = async (body:TeamData) =>{
 
-    const result = await prisma.user.findFirst({where:{email:body.email}})
-
-    if(result) throw conflictError("Email is already !")
-
-    const userCreate:UserReturn = await prisma.user.create({
+    const result = await prisma.team.create({
         data:body
     })
-
-    return userCreate
+    
+    return result
 
 }
 
-const findByEmail = async (email:string) =>{
-    
+const registerTeamAndChamp = async (campId:number, teamId:number) =>{
 
-    const result = await prisma.user.findFirst({where:{email:email}})
+    return await prisma.championshipAndTeam.create(
+        {data:{campId, teamId}}
+    )
 
-    if(!result) throw notFoundError("User not found!")
+}
+
+const createComposition = async (body:any) =>{
+
+    const result = await prisma.teamComposition.create({data:body})
 
     return result
 
 }
 
-export {create, findByEmail}
+
+export { createTeam, createComposition, registerTeamAndChamp }

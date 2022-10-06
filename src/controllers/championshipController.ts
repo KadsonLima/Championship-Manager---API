@@ -5,7 +5,7 @@ import * as championshipService from '../service/championshipService'
 
 const create = async ( req:Request, res:Response ) =>{
     const { name } = req.body
-    
+    console.log(req.body)
     const result = await championshipService.create({name})
 
     res.status(201).send(result)

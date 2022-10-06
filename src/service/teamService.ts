@@ -1,36 +1,25 @@
-import { User } from "@prisma/client"
-import bcrypt from 'bcrypt';
-import { CreateUser, UserLogin } from "../interfaces/userInterface";
-import * as authRepository from '../repositories/authRepository';
+import { any } from "joi";
+import { TeamData } from "../interfaces/teamInterface";
+import { getChampionshipByLink } from "../repositories/championshipRepository";
+import * as teamRepository from "../repositories/teamRepository";
 import { unauthorizedError } from "../utils/errorUtils";
-import Jwt  from "jsonwebtoken";
-const SECRET = Number(process.env.SECRET_BCRYPT);
+import { formatterTeam } from "../utils/formatterTeam";
 
-const signUp = async ({name, email, password, confirm_password}:CreateUser) =>{
 
-    const passwordEncrypt = bcrypt.hashSync(password, SECRET)
+
+const register = async (teamBody:any, camp:string) =>{
     
-    const result = await authRepository.create({name, email, password:passwordEncrypt})
-    
-    delete result.password
+    const {id:campId} = await getChampionshipByLink(camp);
+    const {races, team} = formatterTeam(teamBody)
 
-    return result
+    const {id} = await teamRepository.createComposition(races)
+    team.compositionId = id
+    const teamData = await teamRepository.createTeam(team)
+    await teamRepository.registerTeamAndChamp(campId, teamData.id)
+ 
+
+    return teamData
 }
 
-const signIn = async ({ email, password }:UserLogin) =>{
 
-    const User = await authRepository.findByEmail(email)
-
-    const match = await bcrypt.compare(password, User.password)
-    
-    if(!match) throw unauthorizedError("Enter email and password correctly !")
-
-    const SECRET_TOKEN = process.env.TOKEN_SECRET_KEY ?? '';
-
-    const token = Jwt.sign({userId:User.id}, SECRET_TOKEN, {expiresIn:'7d'})
-
-    return { name:User.name, token }
-
-}
-
-export {signUp, signIn}
+export { register }

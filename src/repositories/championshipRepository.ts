@@ -27,7 +27,7 @@ const getChampionships = async () =>{
                 select:{
                     team:{
                         select:{
-                            name:true,
+                            nameTeam:true,
                         }
                     },
                 }
@@ -43,7 +43,6 @@ const getChampionships = async () =>{
 }
 
 const getChampionshipById = async (id:number) =>{
-    console.log("dsadas", id)
 
     const result = await prisma.championship.findUnique({
         where:{id:id},
@@ -54,11 +53,13 @@ const getChampionshipById = async (id:number) =>{
                 select:{
                     team:{
                         select:{
-                            name:true,
-                            lider:true,
-                            membro1:true,
-                            membro2:true,
-                            membro3:true,
+                            id:true,
+                            nameTeam:true,
+                            nameLeader:true,
+                            nameMember1:true,
+                            nameMember2:true,
+                            nameMember3:true,
+                            numberContact:true,
                         }
                     }
                 }
@@ -70,4 +71,19 @@ const getChampionshipById = async (id:number) =>{
 
 }
 
-export {create, getChampionships, getChampionshipById}
+const getChampionshipByLink = async (link:string) =>{
+
+    const result = await prisma.championship.findFirst({
+        where:{
+            link:link,
+            active:true
+        }
+    })
+
+    if(!result) throw notFoundError("Championship not Found")
+
+    return result
+
+}
+
+export {create, getChampionships, getChampionshipById, getChampionshipByLink}

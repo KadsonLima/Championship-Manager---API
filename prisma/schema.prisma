@@ -2,16 +2,21 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
+
   provider = "prisma-client-js"
+
 }
 
 datasource db {
+
   provider = "postgresql"
   url      = env("DATABASE_URL")
+
 }
 
 
 model User{
+
   id       Int      @id @default(autoincrement())
   name     String
   email    String   @unique
@@ -21,6 +26,7 @@ model User{
 }
 
 model Championship{
+
   id         Int      @id @default(autoincrement())
   name       String   @unique
   link       String   @unique
@@ -29,6 +35,7 @@ model Championship{
   subscribes ChampionshipAndTeam[]
 
   @@map("championship")
+
 }
 
 
@@ -43,6 +50,7 @@ model Groups{
 }
 
 model ChampionshipAndTeam{
+
   id      Int    @id @default(autoincrement())
   camp    Championship @relation(fields: [campId], references: [id])
   campId  Int
@@ -50,16 +58,21 @@ model ChampionshipAndTeam{
   teamId  Int
 
   @@map("championshipAndTeam")
+
 }
 
 
 model Team{
-  id      Int    @id @default(autoincrement())
-  name    String
-  lider   String @unique
-  membro1 String @unique
-  membro2 String @unique
-  membro3 String @unique
+
+  id            Int    @id @default(autoincrement())
+  nameTeam      String
+  numberContact String @unique
+  nameLeader    String @unique
+  nameMember1   String @unique
+  nameMember2   String @unique
+  nameMember3   String @unique
+  composition   TeamComposition    @relation(fields: [compositionId], references: [id])
+  compositionId Int
 
   group Groups[]
   championship ChampionshipAndTeam[]
@@ -67,9 +80,39 @@ model Team{
   @@map("team")
 }
 
-model Notice{
+model TeamComposition{
+
   id      Int    @id @default(autoincrement())
-  text String
+  
+  leader  RacesType
+  
+  member1 RacesType
+  
+  member2 RacesType
+  
+  member3 RacesType
+
+  team    Team[]
+
+
+  @@map("teamComposition")
+}
+
+enum RacesType {
+  WR
+  MG
+  WB
+  WF
+  EA
+  EP
+}
+
+model Notice{
+
+  id         Int    @id @default(autoincrement())
+  text       String
   createdAt  DateTime @default(now()) @db.Date()
+
+  @@map("notice")
 
 }
