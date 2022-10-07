@@ -11,9 +11,24 @@ const create = async ({name}:Omit<ChampionshipData, 'link'>) =>{
     return result
 }
 
+const createNew = async (text:string, userId:number ) =>{
+    
+    const result = await championshipRepository.createNew(text, userId)
+
+    return result
+}
+
 const getChampionships = async () =>{
 
     const result = await championshipRepository.getChampionships()
+
+    return result
+
+}
+
+const getNews = async () =>{
+
+    const result = await championshipRepository.getNews()
 
     return result
 
@@ -27,4 +42,4 @@ const getChampionshipById = async (id:number) =>{
 
 }
 
-export {create, getChampionships, getChampionshipById}
+export {create, getChampionships, getChampionshipById, createNew, getNews}

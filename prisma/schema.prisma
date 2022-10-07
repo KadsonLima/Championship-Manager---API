@@ -21,7 +21,7 @@ model User{
   name     String
   email    String   @unique
   password String
-
+  notice Notice[]
   @@map("users")
 }
 
@@ -112,7 +112,8 @@ model Notice{
   id         Int    @id @default(autoincrement())
   text       String
   createdAt  DateTime @default(now()) @db.Date()
-
+  user    User @relation(fields: [userId], references: [id])
+  userId  Int
   @@map("notice")
 
 }

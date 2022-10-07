@@ -29,7 +29,7 @@ const signIn = async ({ email, password }:UserLogin) =>{
 
     const token = Jwt.sign({userId:User.id}, SECRET_TOKEN, {expiresIn:'7d'})
 
-    return { name:User.name, token }
+    return { name:User.name, id:User.id, token }
 
 }
 

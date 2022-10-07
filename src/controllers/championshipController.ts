@@ -5,8 +5,16 @@ import * as championshipService from '../service/championshipService'
 
 const create = async ( req:Request, res:Response ) =>{
     const { name } = req.body
-    console.log(req.body)
     const result = await championshipService.create({name})
+
+    res.status(201).send(result)
+}
+
+const createNew = async ( req:Request, res:Response ) =>{
+
+    const { text, userId } = req.body
+
+    const result = await championshipService.createNew(text, userId )
 
     res.status(201).send(result)
 }
@@ -14,6 +22,13 @@ const create = async ( req:Request, res:Response ) =>{
 const getChampionships = async ( req:Request, res:Response ) =>{
 
     const result = await championshipService.getChampionships()
+    
+    res.status(200).send(result)
+}
+
+const getNews = async ( req:Request, res:Response ) =>{
+
+    const result = await championshipService.getNews()
     
     res.status(200).send(result)
 }
@@ -27,4 +42,4 @@ const getChampionshipById = async ( req:Request, res:Response ) =>{
     res.status(200).send(result)
 }
 
-export { create, getChampionships , getChampionshipById}
+export { create, getChampionships , getChampionshipById, createNew, getNews}

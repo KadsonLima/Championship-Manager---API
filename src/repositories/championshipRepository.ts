@@ -1,4 +1,5 @@
 import { Championship } from "@prisma/client";
+import { accessSync } from "fs";
 import {prisma} from "../database";
 import { ChampionshipData } from "../interfaces/championshipInterface";
 import { conflictError, notFoundError } from "../utils/errorUtils";
@@ -12,6 +13,14 @@ const create = async (body:ChampionshipData) =>{
     const championshipCreate = await prisma.championship.create({data:body})
 
     return championshipCreate
+
+}
+
+const createNew = async (text:string, userId:number) =>{
+
+    const createNotice = await prisma.notice.create({data:{text:text, userId:userId}})
+
+    return createNotice
 
 }
 
@@ -34,6 +43,27 @@ const getChampionships = async () =>{
             }
             
             
+        
+        }
+    })
+
+    return result
+
+}
+
+const getNews = async () =>{
+    
+
+    const result = await prisma.notice.findMany({
+        orderBy:{createdAt:'desc'},
+        select:{    
+            text:true,
+            createdAt:true,
+            user:{
+                select:{
+                    name:true,
+                }
+            }
         
         }
     })
@@ -94,4 +124,4 @@ const getChampionshipByLink = async (link:string) =>{
 
 }
 
-export {create, getChampionships, getChampionshipById, getChampionshipByLink}
+export {create, getChampionships, getChampionshipById, getChampionshipByLink, createNew, getNews}
