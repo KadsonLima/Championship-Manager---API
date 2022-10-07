@@ -43,7 +43,7 @@ model Groups{
   id      Int     @id @default(autoincrement())
   name    String  @unique
   team    Team    @relation(fields: [teamId], references: [id])
-  teamId  Int
+  teamId  Int  @unique
 
   @@map("groups")
 

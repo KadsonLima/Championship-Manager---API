@@ -60,6 +60,14 @@ const getChampionshipById = async (id:number) =>{
                             nameMember2:true,
                             nameMember3:true,
                             numberContact:true,
+                            composition:{
+                                select:{
+                                    leader:true,
+                                    member1:true,
+                                    member2:true,
+                                    member3:true,
+                                }
+                            }
                         }
                     }
                 }
