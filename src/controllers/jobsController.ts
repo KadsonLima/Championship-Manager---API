@@ -5,6 +5,8 @@ import * as jobsService from '../service/jobsService'
 
 const create = async ( req:Request, res:Response ) =>{
 
+
+    
     const { name , description, tagId, expId } = req.body
     
     const result = await jobsService.create({ name , description})
@@ -14,6 +16,9 @@ const create = async ( req:Request, res:Response ) =>{
 
 const getjobs = async ( req:Request, res:Response ) =>{
     
+    console.log(res.locals.imagem)
+     res.send(req.file);
+     return
     const result = await jobsService.getJobs()
 
     res.status(200).send(result)

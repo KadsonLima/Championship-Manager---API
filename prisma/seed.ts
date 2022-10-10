@@ -58,12 +58,15 @@ const main = async () => {
     {
       name: "Kadson Lima",
       numberContact:"84996443438",
-      email:"kadson-kaio@hotmail.com"
+      email:"kadson-kaio@hotmail.com",
+      curriculum: "https://storage.googleapis.com/storagejobmanager.appspot.com/curriculos/Kadson-server.ts"
     },
     {
       name: "João Mario",
       numberContact:"84992354235",
-      email:"joaomario@hotmail.com"
+      email:"joaomario@hotmail.com",
+      curriculum: "https://storage.googleapis.com/storagejobmanager.appspot.com/curriculos/Kadson-server.ts"
+
     },
   ];
   const jobTags = [

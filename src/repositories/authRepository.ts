@@ -1,4 +1,4 @@
-import {prisma} from "../database";
+import {prisma} from "../config/database";
 import { UserData, UserReturn } from "../interfaces/userInterface";
 import { conflictError, notFoundError } from "../utils/errorUtils";
 

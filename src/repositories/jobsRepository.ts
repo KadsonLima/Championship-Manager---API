@@ -1,6 +1,6 @@
 import { Job } from "@prisma/client";
 import { accessSync } from "fs";
-import {prisma} from "../database";
+import {prisma} from "../config/database";
 import { jobsData } from "../interfaces/jobsInterface";
 import { conflictError, notFoundError } from "../utils/errorUtils";
 

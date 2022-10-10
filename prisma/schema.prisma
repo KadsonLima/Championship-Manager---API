@@ -84,6 +84,7 @@ model Candidate{
   name          String
   numberContact String @unique
   email         String @unique 
+  curriculum    String
 
   jobs JobAndCandidate[]
 
