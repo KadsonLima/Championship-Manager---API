@@ -22,4 +22,14 @@ const getCandidates = async ( req:Request, res:Response ) =>{
     res.status(200).send(result)
 }
 
-export { create, getCandidates}
+const getJobDescription = async ( req:Request, res:Response ) =>{
+    
+    const {link} = req.params
+
+    const result = await candidateService.getJobDescription(link)
+
+    res.status(200).send(result)
+}
+
+
+export { create, getCandidates, getJobDescription}

@@ -23,4 +23,44 @@ const getCandidates = async () => {
   return result;
 };
 
-export { create, getCandidates };
+const getJobDescription = async (link:string) =>{
+    
+
+  const result = await prisma.job.findFirst({where:{link:link},
+
+      select:{
+                  id:true,
+                  name:true,
+                  link:true,
+                  createdAt:true,
+                  description:true,
+                  active:true,
+                  tags:{
+                      select:{
+                         tags:{
+                          select:{
+                              name:true,
+                          }
+                         }
+                      }
+                  },
+                  experience:{
+                      select:{
+                          experience:{
+                              select:{
+                                  name:true,
+                              }
+                          }
+                      }
+                  },
+      
+      }
+      
+  });
+
+  if(!result) throw notFoundError("Job not Found")
+
+  return result
+}
+
+export { create, getCandidates, getJobDescription };

@@ -15,8 +15,6 @@ const create = async ( req:Request, res:Response ) =>{
 }
 
 const getjobs = async ( req:Request, res:Response ) =>{
-    
-    console.log(res.locals.imagem)
 
     const result = await jobsService.getJobs()
 

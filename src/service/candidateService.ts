@@ -17,4 +17,12 @@ const getCandidates = async () =>{
 
     return result
 }
-export { create, getCandidates }
+
+const getJobDescription = async (link:string) =>{
+
+    const result = await candidateRepository.getJobDescription(link)
+
+    return result
+}
+
+export { create, getCandidates , getJobDescription}
