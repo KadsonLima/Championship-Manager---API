@@ -1,4 +1,5 @@
 import { Job } from "@prisma/client";
+import { NotFoundError } from "@prisma/client/runtime";
 import { accessSync } from "fs";
 import {prisma} from "../config/database";
 import { jobsData } from "../interfaces/jobsInterface";
@@ -14,10 +15,13 @@ const create = async (body:any) =>{
 
 const changeJob = async (id:number) =>{
 
-    const result = await prisma.job.update({where:{id:id}, data:{active:false}})
+    const job = await prisma.job.findUnique({where:{id:id}})
 
-    return result
+    if(!job) throw notFoundError("Job not Found");
 
+    return await prisma.job.update({where:{id:id}, data:{active:!job.active}})
+
+     
 }
 
 
