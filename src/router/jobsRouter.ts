@@ -15,9 +15,10 @@ const jobsRouter = Router()
 
 jobsRouter.use(validateJWT())
 jobsRouter.post('',schemaValidate(createjobsInSchema), create);
-jobsRouter.post('/curriculos', create);
+jobsRouter.post('/curriculos', Multer.single("imagem"),uploadImage,  create);
+jobsRouter.get('/curriculos', create);
 jobsRouter.put('/:id', changeJob);
-jobsRouter.get('', Multer.single("imagem"),uploadImage, getjobs);
+jobsRouter.get('',getjobs);
 jobsRouter.get('/:id', getJobById);
 
 export default jobsRouter
