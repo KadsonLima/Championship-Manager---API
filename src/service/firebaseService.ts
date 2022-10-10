@@ -31,7 +31,7 @@ const uploadImage = (req: Request, res: Response, next: NextFunction) => {
   const timeElapsed = Date.now();
   const nome = req.body.name;
   const imagem = req.file;
-  const nomeArquivo = nome + "-" + imagem.originalname + new Date(timeElapsed);
+  const nomeArquivo = nome + "-" + imagem.originalname;
 
   const file = bucket.file("curriculos/" + nomeArquivo);
 
