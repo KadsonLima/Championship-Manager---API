@@ -1,30 +1,37 @@
-import firebaseAccountCredentials from '../config/firebase-key.json'
-import { NextFunction , Request, Response} from 'express';
-import admin from 'firebase-admin';
+import firebaseAccountCredentials from "../config/firebase-key.json";
+import { NextFunction, Request, Response } from "express";
+import admin from "firebase-admin";
+import { notFoundError, wrongSchemaError } from "../utils/errorUtils";
+import Joi from "joi";
 
-const serviceAccount = firebaseAccountCredentials as admin.ServiceAccount
+const bodySchema = Joi.object().keys({
 
+  name: Joi.string().required(),
+  numberContact: Joi.string().required(),
+  email: Joi.string().email().required(),
+  
+})
+
+const serviceAccount = firebaseAccountCredentials as admin.ServiceAccount;
 
 const BUCKET = "storagejobmanager.appspot.com";
-if(!admin.apps.length){
+if (!admin.apps.length) {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     storageBucket: BUCKET,
-    
-
   });
 }
 
-
 const bucket = admin.storage().bucket();
 
-const uploadImage = (req:Request, res:Response, next:NextFunction) => {
-  if (!req.file) return next();
+const uploadImage = (req: Request, res: Response, next: NextFunction) => {
+  if (!req.file) throw notFoundError("Curriculum not Found");
+  const timeElapsed = Date.now();
   const nome = req.body.name;
   const imagem = req.file;
-  const nomeArquivo = nome +"-"+ imagem.originalname;
+  const nomeArquivo = nome + "-" + imagem.originalname + new Date(timeElapsed);
 
-  const file = bucket.file("curriculos/"+nomeArquivo);
+  const file = bucket.file("curriculos/" + nomeArquivo);
 
   const stream = file.createWriteStream({
     metadata: {
@@ -47,8 +54,6 @@ const uploadImage = (req:Request, res:Response, next:NextFunction) => {
   });
 
   stream.end(imagem.buffer);
-
-
 };
 
 export default uploadImage;

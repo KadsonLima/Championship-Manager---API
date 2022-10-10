@@ -94,7 +94,9 @@ const getJobById = async (id:number) =>{
         
         }
         
-    })
+    });
+
+    if(!result) throw notFoundError("Job not Found")
 
     return result
 
@@ -112,7 +114,8 @@ const getCandidatures = async (id:number) =>{
                     id:true,
                     name:true,
                     numberContact:true,
-                    email:true
+                    email:true,
+                    curriculum:true,
                 }
             }
         }

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { changeJob, create, getJobById, getjobs } from "../controllers/jobsController";
+import * as candidateController from '../controllers/candidateController'
 import schemaValidate from "../middlewares/schemaValidate";
 import { validateJWT } from "../middlewares/validateJwt";
 import createjobsInSchema from "../schemas/jobsSchemas/createJobsSchema";
@@ -15,9 +16,13 @@ const jobsRouter = Router()
 
 jobsRouter.use(validateJWT())
 jobsRouter.post('',schemaValidate(createjobsInSchema), create);
-jobsRouter.post('/curriculos', Multer.single("imagem"),uploadImage,  create);
-jobsRouter.get('/curriculos', create);
+
+jobsRouter.post('/curriculos',Multer.single("curriculum"),uploadImage,  candidateController.create);
+
+jobsRouter.get('/curriculos', candidateController.getCandidates);
+
 jobsRouter.put('/:id', changeJob);
+
 jobsRouter.get('',getjobs);
 jobsRouter.get('/:id', getJobById);
 
