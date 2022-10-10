@@ -25,87 +25,89 @@ model User{
   @@map("users")
 }
 
-model Championship{
+model Job{
 
   id         Int      @id @default(autoincrement())
-  name       String   @unique
+  name       String   
+  description       String   
   link       String   @unique
-  createdAt  DateTime @default(now()) @db.Date()
-  active     Boolean  @default(true)
-  subscribes ChampionshipAndTeam[]
+  createdAt  DateTime @default(now()) 
+  active     Boolean  @default(true)   
+  subscribes JobAndCandidate[]
+  experience JobAndExperience[]
+  tags JobAndTags[]
 
-  @@map("championship")
-
-}
-
-
-model Groups{
-  id      Int     @id @default(autoincrement())
-  name    String  @unique
-  team    Team    @relation(fields: [teamId], references: [id])
-  teamId  Int  @unique
-
-  @@map("groups")
-
-}
-
-model ChampionshipAndTeam{
-
-  id      Int    @id @default(autoincrement())
-  camp    Championship @relation(fields: [campId], references: [id])
-  campId  Int
-  team    Team @relation(fields: [teamId], references: [id])
-  teamId  Int
-
-  @@map("championshipAndTeam")
+  @@map("jobs")
 
 }
 
 
-model Team{
+model JobAndCandidate{
+
+  id           Int       @id @default(autoincrement())
+  job          Job       @relation(fields: [jobId], references: [id])
+  jobId        Int
+  candidate    Candidate @relation(fields: [candidateId], references: [id])
+  candidateId  Int
+
+  @@map("jobAndCandidate")
+
+}
+
+model JobAndExperience{
+
+  id           Int       @id @default(autoincrement())
+  job          Job       @relation(fields: [jobId], references: [id])
+  jobId        Int
+  experience    Experience @relation(fields: [experienceId], references: [id])
+  experienceId  Int
+
+  @@map("jobAndExperience")
+
+}
+
+model JobAndTags{
+
+  id           Int       @id @default(autoincrement())
+  job          Job       @relation(fields: [jobId], references: [id])
+  jobId        Int
+  tags    Tag @relation(fields: [tagId], references: [id])
+  tagId  Int
+
+  @@map("jobAndTags")
+
+}
+
+model Candidate{
 
   id            Int    @id @default(autoincrement())
-  nameTeam      String
+  name          String
   numberContact String @unique
-  nameLeader    String @unique
-  nameMember1   String @unique
-  nameMember2   String @unique
-  nameMember3   String @unique
-  composition   TeamComposition    @relation(fields: [compositionId], references: [id])
-  compositionId Int
+  email         String @unique 
 
-  group Groups[]
-  championship ChampionshipAndTeam[]
+  jobs JobAndCandidate[]
 
-  @@map("team")
+  @@map("candidate")
 }
 
-model TeamComposition{
+model Tag{
 
   id      Int    @id @default(autoincrement())
-  
-  leader  RacesType
-  
-  member1 RacesType
-  
-  member2 RacesType
-  
-  member3 RacesType
+  name    String
+  jobs JobAndTags[]
 
-  team    Team[]
-
-
-  @@map("teamComposition")
+  @@map("tags")
 }
 
-enum RacesType {
-  WR
-  MG
-  WB
-  WF
-  EA
-  EP
+model Experience{
+
+  id      Int    @id @default(autoincrement())
+  name    String
+  jobs JobAndExperience[]
+
+  @@map("experience")
 }
+
 
 model Notice{
 
