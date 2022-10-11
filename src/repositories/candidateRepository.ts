@@ -10,7 +10,7 @@ const create = async (body: Omit<Candidate, "id">) => {
 
 const getCandidates = async () => {
   const result = await prisma.candidate.findMany({
-    orderBy: { id: "desc" },
+    orderBy: { id: "desc" },take:5,
     select: {
       id: true,
       name: true,
