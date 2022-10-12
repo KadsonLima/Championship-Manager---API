@@ -25,7 +25,6 @@ if (!admin.apps.length) {
 const bucket = admin.storage().bucket();
 
 const uploadImage = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.file)
 
   if (!req.file) throw notFoundError("Curriculum not Found");
   const timeElapsed = Date.now();

@@ -14,7 +14,6 @@ const getCandidates = async () => {
     select: {
       id: true,
       name: true,
-      numberContact: true,
       email: true,
       curriculum: true,
     },

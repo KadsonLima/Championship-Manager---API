@@ -117,7 +117,6 @@ const getCandidatures = async (id:number) =>{
                 select:{
                     id:true,
                     name:true,
-                    numberContact:true,
                     email:true,
                     curriculum:true,
                 }

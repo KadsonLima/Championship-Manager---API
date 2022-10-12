@@ -7,9 +7,9 @@ const create = async ( req:Request, res:Response ) =>{
 
     const curriculum = res.locals.imagem;
     
-    const { name , numberContact, email} = req.body
+    const { name , email} = req.body
     
-    const result = await candidateService.create({  name , numberContact, email, curriculum})
+    const result = await candidateService.create({  name , email, curriculum})
 
     res.status(201).send(result)
 }
