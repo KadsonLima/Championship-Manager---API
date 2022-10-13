@@ -7,9 +7,9 @@ const create = async ( req:Request, res:Response ) =>{
 
 
     
-    const { name , description, tagId, expId } = req.body
+    const { name , description, tags , exps} = req.body
     
-    const result = await jobsService.create({ name , description})
+    const result = await jobsService.create( {name , description, tags, exps})
 
     res.status(201).send(result)
 }

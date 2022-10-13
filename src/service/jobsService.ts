@@ -1,15 +1,23 @@
-import { jobsData } from "../interfaces/jobsInterface";
+import { jobsData , createJob} from "../interfaces/jobsInterface";
 import * as jobsRepository from '../repositories/jobsRepository'
 import {nanoid} from 'nanoid';
 import { number } from "joi";
+import { setTagsJob } from "../repositories/tagsRepository";
+import { setExpJob } from "../repositories/expRepository";
 
-const create = async ({ name , description}:Omit<jobsData, 'link'>) =>{
+const create = async (dataJob:createJob) =>{
 
     const link = nanoid()
-    
-    const result = await jobsRepository.create({ name , description, link})
 
-    return result
+    const { exps, tags, name , description } = dataJob
+    
+    const jobData = await jobsRepository.create({ name , description, link})
+
+    await setTagsJob(jobData.id, tags)
+
+    await setExpJob(jobData.id, exps)
+
+    return jobData
 }
 
 const changeJob = async (id:number) =>{

@@ -1,10 +1,13 @@
 
 import { Candidate } from '@prisma/client';
 import Joi from "joi";
+import { CandidateData } from '../interfaces/candidateInterface';
 import * as candidateRepository from '../repositories/candidateRepository'
+import * as tagsRepository from '../repositories/tagsRepository'
+import * as expsRepository from '../repositories/expRepository'
 import { wrongSchemaError } from '../utils/errorUtils';
 
-const create = async (candidateData:Omit<Candidate, 'id'>) =>{
+const create = async (candidateData:CandidateData) =>{
 
     const result = await candidateRepository.create(candidateData)
 
@@ -13,8 +16,19 @@ const create = async (candidateData:Omit<Candidate, 'id'>) =>{
 
 const getCandidates = async () =>{
 
-    const result = await candidateRepository.getCandidates()
+    const candidates = await candidateRepository.getCandidates()
 
+    const tags = await tagsRepository.getTags()
+
+    const exps = await expsRepository.getExps()
+
+    const result = {
+        candidates,
+        exps,
+        tags
+    }
+
+    console.log(result)
     return result
 }
 

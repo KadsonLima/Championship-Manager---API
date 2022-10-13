@@ -1,8 +1,9 @@
 import { Candidate } from "@prisma/client";
 import { prisma } from "../config/database";
+import { CandidateData } from "../interfaces/candidateInterface";
 import { conflictError, notFoundError } from "../utils/errorUtils";
 
-const create = async (body: Omit<Candidate, "id">) => {
+const create = async (body: CandidateData) => {
   const result = await prisma.candidate.create({ data: body });
 
   return result;
@@ -10,7 +11,7 @@ const create = async (body: Omit<Candidate, "id">) => {
 
 const getCandidates = async () => {
   const result = await prisma.candidate.findMany({
-    orderBy: { id: "desc" },take:5,
+    orderBy: { createdAt: "desc" },take:5,
     select: {
       id: true,
       name: true,

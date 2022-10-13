@@ -78,13 +78,28 @@ model JobAndTags{
 
 }
 
+
+model CandidateTags{
+
+  id           Int       @id @default(autoincrement())
+  candidate          Candidate       @relation(fields: [candidateId], references: [id])
+  candidateId        Int
+  tags    Tag @relation(fields: [tagId], references: [id])
+  tagId  Int
+
+  @@map("candidateTags")
+
+}
+
 model Candidate{
 
   id            Int    @id @default(autoincrement())
   name          String
   email         String @unique 
   curriculum    String
+  createdAt  DateTime @default(now()) 
 
+  tags CandidateTags[]
   jobs JobAndCandidate[]
 
   @@map("candidate")
@@ -95,7 +110,7 @@ model Tag{
   id      Int    @id @default(autoincrement())
   name    String
   jobs JobAndTags[]
-
+  candidates CandidateTags[]
   @@map("tags")
 }
 

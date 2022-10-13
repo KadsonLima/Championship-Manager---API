@@ -4,8 +4,8 @@ const bodySchema = Joi.object({
 
     name:Joi.string().required().label("name is empty"),
     description:Joi.string().required().label("description is empty"),
-    tagId:Joi.number().required().label("tag is empty"),
-    expId:Joi.number().required().label("exp is empty")
+    tags:Joi.array().required(),
+    exps:Joi.array().required()
 
 }).required().options({allowUnknown:false})
 
